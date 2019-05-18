@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/round_home_24"
+            android:title="主页" />
+
+        <item
+            android:id="@+id/nav_category"
+            android:icon="@drawable/round_category_24"
+            android:title="分类" />
+    </group>
+
+        <item android:title="辅助功能">
+            <menu>
+                    <item
+                        android:id="@+id/nav_settings"
+                        android:icon="@drawable/round_settings_24"
+                        android:title="设置" />
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_info"
+                        android:icon="@drawable/round_info_24"
+                        android:title="关于" />
+                </group>
+            </menu>
+        </item>
+</menu>

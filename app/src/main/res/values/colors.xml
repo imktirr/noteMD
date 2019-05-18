@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3E9CAF</color>
+    <color name="colorPrimaryDark">#327F8D</color>
+    <color name="colorAccent">#D0725B</color>
+    <color name="noteViewBottomBarButtonPressed">#34000000</color>
+    <color name="noteViewBottomBarButton">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="backgroundGrey">#F3F3F3</color>
+
+    <color name="mdColor1">#EF9A9A</color>
+    <color name="mdColor2">#F48FB1</color>
+    <color name="mdColor3">#CE93D8</color>
+    <color name="mdColor4">#B39DDB</color>
+    <color name="mdColor5">#9FA8DA</color>
+    <color name="mdColor6">#90CAF9</color>
+    <color name="mdColor7">#81D4FA</color>
+    <color name="mdColor8">#80DEEA</color>
+    <color name="mdColor9">#80CBC4</color>
+    <color name="mdColor10">#A5D6A7</color>
+    <color name="mdColor11">#C5E1A5</color>
+    <color name="mdColor12">#E6EE9C</color>
+    <color name="mdColor13">#FFF59D</color>
+    <color name="mdColor14">#FFE082</color>
+    <color name="mdColor15">#FFCC80</color>
+    <color name="mdColor16">#FFAB91</color>
+</resources>
