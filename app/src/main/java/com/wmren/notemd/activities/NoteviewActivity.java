@@ -3,6 +3,7 @@ package com.wmren.notemd.activities;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -79,6 +80,13 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
             editNoteFragment.setArguments(currentNoteInfo);
         }
         addFragment(editNoteFragment, R.id.fragment_field);
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+        saveNote(noteStatus);
     }
 
     //切换碎片所用的函数
@@ -175,7 +183,6 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
 
     @Override
     public void onBackPressed() {
-        //TODO: 保存便签内容
         if (currentState == EDIT) {
             super.onBackPressed();
             saveNote(noteStatus);
@@ -196,6 +203,7 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
     }
 
     private void saveNote(int type) {
+        Log.d(TAG, "saveNote: ");
         ContentValues values = new ContentValues();
         if (noteTitle == null)
                 noteTitle = "";
@@ -211,6 +219,13 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
 //            values.put(NotesDB.COLUMN_NAME_ID, noteId);
                 values.put(NotesDB.COLUMN_NAME_NOTE_DATE, dateNum);
                 dbRead.insert(NotesDB.TABLE_NAME_NOTES, null, values);
+                Cursor cursor = dbRead.query(NotesDB.TABLE_NAME_NOTES, null, null,
+                        null, null, null, "_id desc");
+                cursor.moveToFirst();
+                noteId = cursor.getString(cursor.getColumnIndex(NotesDB.COLUMN_NAME_ID));
+                cursor.close();
+                Log.d(TAG, "saveNote: " + noteId);
+                noteStatus = EXIST_NOTE;
                 Toast.makeText(NoteviewActivity.this, "便签已保存", Toast.LENGTH_SHORT).show();
             }
         } else if (type == EXIST_NOTE) {

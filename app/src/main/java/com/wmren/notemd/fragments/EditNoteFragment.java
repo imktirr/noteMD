@@ -176,6 +176,12 @@ public class EditNoteFragment extends Fragment implements View.OnClickListener {
         super.onDetach();
         mListener = null;
     }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: EditNoteFragment");
+    }
 
     @Override
     public void onClick(View v) {

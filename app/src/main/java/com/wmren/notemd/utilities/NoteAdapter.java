@@ -1,7 +1,10 @@
 package com.wmren.notemd.utilities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,6 +29,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             "#80CBC4", "#A5D6A7", "#C5E1A5", "#E6EE9C",
             "#FFF59D", "#FFE082", "#FFCC80", "#FFAB91"
     };
+
+    public static boolean colorMode = true;
 
     private Random random = new Random();
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,9 +84,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         holder.noteDate.setText(note.getDate());
         holder.itemView.setTag(position);
 
-
-        int index = random.nextInt(colors.length);
-        holder.cardView.setCardBackgroundColor(Color.parseColor(colors[index]));
+        if (colorMode) {
+            int index = random.nextInt(colors.length);
+            holder.cardView.setCardBackgroundColor(Color.parseColor(colors[index]));
+        } else {
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     @Override
