@@ -143,7 +143,7 @@ public class PdfExportActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
         File appDir = new File(Environment.getExternalStorageDirectory(), "/noteMD/pdfExport");
         if (!appDir.exists()) {
-            appDir.mkdir();
+            appDir.mkdirs();
         }
         pdfFilePath = appDir.getAbsolutePath() + "/" + fileName + ".pdf";
         //创建DexMaker缓存目录

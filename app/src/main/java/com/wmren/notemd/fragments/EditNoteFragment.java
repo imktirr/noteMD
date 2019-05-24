@@ -298,7 +298,9 @@ public class EditNoteFragment extends Fragment implements View.OnClickListener {
         File appDir = new File(Environment.getExternalStorageDirectory().getPath(), "noteMD/photo");
         Log.d(TAG, "openCamera: " + appDir);
         if (!appDir.exists()) {
-            appDir.mkdir();
+
+            boolean result = appDir.mkdirs();
+            Log.d(TAG, "openCamera: mkdir result:" + result);
         }
 
         tempFile = new File(appDir, System.currentTimeMillis() + ".jpg");
