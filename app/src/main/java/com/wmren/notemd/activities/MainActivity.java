@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.dx.command.Main;
 import com.wmren.notemd.fragments.InfoFragment;
 import com.wmren.notemd.utilities.NotesDB;
 import com.wmren.notemd.R;
@@ -93,10 +94,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_home:
                 replaceFragment(homePageScrollView, R.id.homepage_fragment);
                 break;
-            case R.id.nav_settings:
+            case R.id.nav_search: {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.nav_settings: {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 break;
+            }
             case R.id.nav_info:
                 replaceFragment(infoFragment, R.id.homepage_fragment);
                 break;

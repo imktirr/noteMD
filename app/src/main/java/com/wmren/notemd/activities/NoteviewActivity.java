@@ -1,5 +1,6 @@
 package com.wmren.notemd.activities;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,6 +40,10 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
 
     private int currentState = EDIT;
 
+    private android.support.v7.widget.Toolbar toolbar;
+
+    private SQLiteDatabase dbRead = MainActivity.notesDB.getWritableDatabase();
+
     private EditNoteFragment editNoteFragment = new EditNoteFragment();
     private PreviewNoteFragment previewNoteFragment = new PreviewNoteFragment();
 
@@ -46,6 +51,7 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_noteview);
+
 
         Intent intent = getIntent();
         noteStatus = intent.getIntExtra("noteStatus", NEW_NOTE);
@@ -55,7 +61,8 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
 
         Log.d(TAG, "note id = " + noteId);
         //将原生actionbar替换为toolbar
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.view_toolbar);
+        toolbar = findViewById(R.id.view_toolbar);
+        toolbar.setTitle("编辑便签");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -107,10 +114,12 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
                 break;
             case R.id.edit: //切换显示类型
                 currentState = EDIT;
+                toolbar.setTitle("编辑便签");
                 replaceFragment(editNoteFragment, R.id.fragment_field);
                 break;
             case R.id.preview:
                 currentState = PREVIEW;
+                toolbar.setTitle("预览便签");
                 Bundle noteInfo = new Bundle();
                 if (noteTitle == null) {
                     noteInfo.putString(PreviewNoteFragment.NOTE_TITLE, "");
@@ -124,6 +133,39 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
                 }
                 previewNoteFragment.setArguments(noteInfo);
                 replaceFragment(previewNoteFragment, R.id.fragment_field);
+                break;
+            case R.id.delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(NoteviewActivity.this);
+                builder.setTitle("删除便签");
+                builder.setMessage("确认删除便签？");
+                builder.setPositiveButton("确定", (dialog, which) -> {
+                    dbRead.delete(NotesDB.TABLE_NAME_NOTES, NotesDB.COLUMN_NAME_ID + " = ?", new String[]{noteId});
+                    finish();
+                });
+                builder.setNegativeButton("取消", (dialog, which) -> {
+                    Toast.makeText(NoteviewActivity.this, "操作已取消", Toast.LENGTH_SHORT).show();
+                });
+                builder.show();
+                break;
+
+            case R.id.share:
+                final String[] items = {"分享文本", "导出PDF"};
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(NoteviewActivity.this);
+                builder1.setTitle("分享");
+                builder1.setItems(items, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            shareText();
+                            break;
+                        case 1:
+                            sharePDF();
+                            break;
+                        default:
+                            break;
+                    }
+                });
+                builder1.show();
+
                 break;
             default:
                 break;
@@ -154,8 +196,6 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
     }
 
     private void saveNote(int type) {
-        SQLiteDatabase dbRead;
-        dbRead = MainActivity.notesDB.getWritableDatabase();
         ContentValues values = new ContentValues();
         if (noteTitle == null)
                 noteTitle = "";
@@ -178,5 +218,20 @@ public class NoteviewActivity extends AppCompatActivity implements EditNoteFragm
                     new String[]{noteId});
             Toast.makeText(NoteviewActivity.this, "便签已保存", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void shareText() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "# " + noteTitle + "\n" + noteContent);
+        intent.setType("text/plain");
+        startActivity(Intent.createChooser(intent, "分享至"));
+    }
+
+    private void sharePDF() {
+        Intent intent = new Intent(NoteviewActivity.this, PdfExportActivity.class);
+        intent.putExtra("noteTitle", noteTitle);
+        intent.putExtra("noteContent", noteContent);
+        startActivity(intent);
     }
 }

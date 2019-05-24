@@ -9,7 +9,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.wmren.notemd.R;
-import com.wmren.notemd.parser.MarkdownParser;
+import com.wmren.notemd.tools.MarkdownParser;
 
 
 public class PreviewNoteFragment extends Fragment {

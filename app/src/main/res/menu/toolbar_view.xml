@@ -12,4 +12,18 @@
         android:icon="@drawable/round_description_24"
         android:title="Preview"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/round_delete_24"
+        app:showAsAction="never"
+        android:title="删除便签"
+        />
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/round_share_24"
+        app:showAsAction="never"
+        android:title="分享"
+        />
 </menu>

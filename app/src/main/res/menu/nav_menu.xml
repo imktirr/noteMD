@@ -8,12 +8,13 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/round_home_24"
             android:title="主页" />
+    </group>
 
         <item
-            android:id="@+id/nav_category"
-            android:icon="@drawable/round_category_24"
-            android:title="分类" />
-    </group>
+            android:id="@+id/nav_search"
+            android:icon="@drawable/round_search_24"
+            android:title="搜索" />
+
 
         <item android:title="辅助功能">
             <menu>
